@@ -6,19 +6,20 @@ React continues to dominate the front-end development landscape, and coupled wit
 ## 1. JavaScript Fundamentals (2-3 weeks)
 Before diving into React, ensure you have a solid foundation in modern JavaScript:
 
-- ES6+ Features
-- Arrow functions
-- Destructuring
-- Spread/rest operators
-- Template literals
-- Promises & async/await
-- Modules (import/export)
-- Array methods (map, filter, reduce)
-- DOM manipulation
-- Event handling
-- Closures and scope
-- `this` keyword
-- Prototypes and inheritance
+### ES6 Features
+- [Let and Const](#let-and-const) 
+- [Arrow Functions](#arrow-functions)
+- [Destructuring](#destructuring)
+- [Spread/rest Operators](#spread/rest-operators)
+- [Template Literals](#template-literals)
+- [Promises and Async-Await](#promises-and-async-await)
+- [Modules import-export](#modules-import-export)
+- [Array Methods map-filter-reduce](#array-methods-map-filter-reduce)
+- [DOM Manipulation](#dom-manipulation)
+- [Event Handling](#event-handling)
+- [Closures and Scope](#closures-and-scope)
+- [this Keyword](#this-keyword)
+- [Prototypes and Inheritance](#prototypes-and-inheritance)
 
 ## 2. Development Environment Setup (1 day)
 - Node.js and npm installation
@@ -206,3 +207,213 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
 3. Network in React communities
 4. Practice coding interviews
 5. Apply for React developer positions
+
+===========================================================================
+
+1.  ### Let and Const: 
+
+    #### let → block-scoped, can be reassigned.
+    #### const → block-scoped, cannot be reassigned.
+    
+    TDZ- variables declared with let and const are hoist, But it is not initialized, so it lives in the TDZ (Temporal Dead Zone) not accessible until they are initialized with a value
+
+    ``` 
+    Ex: 1 [Start of block] 
+        2 | 
+        3 |--- TDZ begins (x is hoisted but not initialized) 
+        4 |   x = 5         ❌ Error! `x` is in the Temporal Dead Zone 
+        5 |   console.log(x) ❌ Never reached 
+        6 |   let x         ✅ Initialization (TDZ ends here) 
+        7 | 
+        8 [End of block] You cannot access x on line 4 or 5.
+    ```
+       
+    **[⬆ Back to Top](#es6-features)**
+
+2.  ### Arrow Functions:
+
+    ES6, provide a concise way to write function expressions in JavaScript. They are identified by the => symbol and are used for writing shorter and more readable code.
+    
+    - Array methods (map, filter, reduce) - Arrow functions are perfect for array operations because they make the code short and readable.
+
+    - Event handlers (if not relying on this) - Clean if not using this
+
+    - Timers / callbacks - Shorter syntax
+
+    - Anywhere you don’t need your own this(Avoiding this rebinding) - Arrow functions inherit this from their outer (lexical) scope, making them great when you want to avoid this confusion.
+
+    ``` 
+    Ex 1: const add = (a, b) => a + b;
+
+    Ex 2: this keyword  - 
+    const person = {
+      talk(){
+        setTimeout(() => { // arrow function don't rebind this keyword
+          console.log("this", test);
+        }, 1000)
+      }
+    } 
+    
+    ```
+   
+    **[⬆ Back to Top](#es6-features)**
+
+3.  ### Destructuring:
+   
+    Extract values from arrays or objects easily.
+
+    ```
+    Ex : const address = {
+         street : "",
+         city: "",
+         country: ""
+        }
+
+        normal - const street = address.street; 
+        short  - const { street, city, country } = address; // destructuring syntax
+               - const { street: st } = address;            // new const st
+    ```
+   
+    **[⬆ Back to Top](#es6-features)**
+
+4.  ### Spread/rest Operators
+    
+    #### Spread 
+    The JavaScript spread operator ( ... ) allows us to quickly copy all or part of an existing array or object into another array or object. denoted by three dots `...`
+
+    ```
+    Ex: 1.Array :
+        const first = [1, 2, 3];
+        const second = [4, 5, 6];
+
+        const combinedOld = first.concat(second);             //concat method
+        const combinedSpd = [...first, 'a', ...second, 'b'];  // Spread Operator 
+
+        2.Object :
+
+        const first = { name: "karthi" };
+        const second = { job: "Engineer" };
+
+        const combined = {...first, ...second, location: 'bangalore'};
+    ```
+    #### Rest
+    The rest operator in JavaScript, denoted by three dots (...), allows a function to accept an indefinite number of arguments as an array. It is used in function parameters and must be the last parameter in the list. The rest operator collects all the remaining arguments passed to a function and bundles them into an array, making it easier to handle variable-length argument lists.
+
+    ```
+    Ex: function myBio(...details) {
+        console.log(details); // array 
+        }
+
+        myBio("John", "Doe", "Web Developer", 30, "New York");
+    ```
+
+    **[⬆ Back to Top](#es6-features)**
+
+5.  ### Template Literals
+    
+    Use backticks for string interpolation.
+
+    ```
+    Ex: const name = "Bob";
+        const greeting = `Hello, ${name}!`;
+    ```
+
+    **[⬆ Back to Top](#es6-features)**
+
+6.  ### Promises and Async-Await
+    
+    #### promises
+    - A Promise is a JavaScript object that represents the eventual completion or failure of an asynchronous operation.
+    - It has three states: `pending, fulfilled, and rejected`.
+    - Promises help write cleaner, more manageable async code, avoiding callback hell.
+    - It's a way to handle async tasks like API calls, with .then() for success and .catch() for errors.
+    - `This Response object represents the entire HTTP response — but not the body content itself.`
+      - .json() – for JSON responses
+      - .text() – for plain text
+      - .blob() – for binary data
+      - .formData() – for form data
+      - .arrayBuffer() – for raw data
+    ```
+    Ex: const fetchUser = fetch("https://jsonplaceholder.typicode.com/users/1");
+
+        fetchUser
+        .then(response => response.json())
+        .then(data => {
+            console.log("User Name:", data.name);
+        });
+        .catch( (err)=>console.error(err) )
+
+        console.log("fetchUser:", fetchUser);
+    ```
+    #### Async-Await
+    - `async` makes a function return a Promise.
+
+    - `await` pauses the function until the Promise is resolved or rejected.
+
+    - It makes asynchronous code look and behave like synchronous code, improving readability. 
+    ```
+     Ex: // const Data = async (id) =>{}
+        async function getData(id) {
+        try {
+            const result = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+            const data = await result.json();
+            console.log(data);
+        } catch (error) {
+            console.error("Error:", error);
+        }
+        }
+
+        getData();
+    ```
+
+    **[⬆ Back to Top](#es6-features)**
+
+7.  ### Modules import-export
+    
+    Modules allow you to split your JavaScript code into separate files and reuse them. It helps organize and maintain code better.
+
+    - 1. Named Export
+    You can export multiple items with their names.
+    You must import them using the exact same names (unless you alias).
+
+    - 2. Default Export
+    You export one default value from a module.
+    You can import it with any name.
+
+    ```
+    Ex: 1. export const add = (a, b) => a + b;
+           export const subtract = (a, b) => a - b;
+           import { add, subtract } from './math.js';
+
+        2. export default function log(message) {
+            console.log("LOG:", message);
+           }
+           import myLogger from './logger.js';
+    ```
+         
+    **[⬆ Back to Top](#es6-features)**
+
+8.  ### Array Methods map-filter-reduce
+    
+    **[⬆ Back to Top](#es6-features)**
+
+9.  ### DOM Manipulation
+    
+    **[⬆ Back to Top](#es6-features)**
+
+10. ### Event Handling
+    
+    **[⬆ Back to Top](#es6-features)**
+
+11. ### Closures and Scope
+    
+    **[⬆ Back to Top](#es6-features)**
+
+12. ### `this` Keyword
+    
+    **[⬆ Back to Top](#es6-features)**
+
+13. ### Prototypes and Inheritance
+    
+    **[⬆ Back to Top](#es6-features)**
+

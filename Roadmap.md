@@ -390,10 +390,32 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
            }
            import myLogger from './logger.js';
     ```
-         
+
     **[⬆ Back to Top](#es6-features)**
 
 8.  ### Array Methods map-filter-reduce
+    
+    #### Map 
+    Transforms each element of the array and returns a new array of the same length.
+    ```
+    Ex: const numbers = [1, 2, 3];
+        const doubled = numbers.map(num => num * 2);
+        console.log(doubled); // [2, 4, 6]
+    ```
+    #### Filter
+    Filters elements based on a condition and returns a new array with only matching items.
+    ```
+    Ex: const numbers = [1, 2, 3, 4];
+        const even = numbers.filter(num => num % 2 === 0);
+        console.log(even); // [2, 4]
+    ```
+    #### Reduce
+    Reduces the array to a single value by accumulating results.
+    ```
+    Ex: const numbers = [1, 2, 3, 4];
+        const total = numbers.reduce((acc, curr) => acc + curr, 0);
+        console.log(total); // 10
+    ```
     
     **[⬆ Back to Top](#es6-features)**
 

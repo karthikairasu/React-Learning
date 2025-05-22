@@ -416,10 +416,28 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
         const total = numbers.reduce((acc, curr) => acc + curr, 0);
         console.log(total); // 10
     ```
-    
+
     **[⬆ Back to Top](#es6-features)**
 
 9.  ### DOM Manipulation
+    
+    DOM (Document Object Model) Manipulation is the process of programmatically changing the structure, style, or content of a web page using JavaScript.
+    The DOM is a tree-like representation of your HTML document, and JavaScript can interact with it to update:
+
+        Elements
+
+        Attributes
+
+        Styles
+
+        Text/content
+
+        Event bindings
+    ```
+    Ex: document.getElementById('title');
+        document.querySelector('.card');
+        document.querySelectorAll('li');
+    ```
     
     **[⬆ Back to Top](#es6-features)**
 

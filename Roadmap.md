@@ -424,25 +424,60 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
     DOM (Document Object Model) Manipulation is the process of programmatically changing the structure, style, or content of a web page using JavaScript.
     The DOM is a tree-like representation of your HTML document, and JavaScript can interact with it to update:
 
-        Elements
+       1. Elements
 
-        Attributes
+       2. Attributes
 
-        Styles
+       3. Styles
 
-        Text/content
+       4. Text/content
 
-        Event bindings
+       5. Event bindings
     ```
     Ex: document.getElementById('title');
         document.querySelector('.card');
         document.querySelectorAll('li');
     ```
-    
+
     **[⬆ Back to Top](#es6-features)**
 
 10. ### Event Handling
     
+    Event handling is the mechanism that allows you to capture and respond to user interactions like clicks, key presses, mouse movements, and more.
+
+    #### Event Propagation Phases in JavaScript
+    - Capture Phase – Event moves from the root down to the target.
+
+    - Target Phase – Event reaches the actual element clicked.
+
+    - Bubble Phase – Event moves from the target back up to the root.
+     
+    1. Prevent Default Behavior
+       - Some elements (like `<a>` or `<form>`) have default actions. You can cancel them
+            ```
+            Ex: 
+            document.querySelector("form").addEventListener("submit", function(e) {
+                e.preventDefault(); // Stops the form from submitting 
+            });
+            ```
+    2. Stop Event Propagation
+       - You can stop the event from moving up the DOM tree:
+            ```
+            Ex:
+            <div class="container">
+                Container
+                <div class="box">Box (Click me!)</div>
+            </div>
+            document.querySelector(".container").addEventListener("click", function() {
+                alert("Container clicked!");
+            });
+
+            document.querySelector(".box").addEventListener("click", function(e) {
+                e.stopPropagation(); // Stops the click from reaching the container
+                alert("Box clicked!");
+            });
+            ```
+        
     **[⬆ Back to Top](#es6-features)**
 
 11. ### Closures and Scope

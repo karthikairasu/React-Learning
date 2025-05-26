@@ -455,9 +455,15 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
     1. Prevent Default Behavior
        - Some elements (like `<a>` or `<form>`) have default actions. You can cancel them
             ```
-            Ex: 
+            Ex:
+            <form id="myForm">
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="name" required>
+                <button type="submit">Submit</button>
+            </form> 
             document.querySelector("form").addEventListener("submit", function(e) {
-                e.preventDefault(); // Stops the form from submitting 
+                e.preventDefault(); // Stops the page from reloading
+                alert("Form submitted!");
             });
             ```
     2. Stop Event Propagation
@@ -477,7 +483,17 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
                 alert("Box clicked!");
             });
             ```
-        
+    3. Remove Event Listener
+        ```
+        Ex:
+        function handleClick() {
+            alert("Clicked once!");
+            button.removeEventListener("click", handleClick); // remove after first click
+        }
+
+        const button = document.querySelector("#btn");
+        button.addEventListener("click", handleClick);
+    
     **[⬆ Back to Top](#es6-features)**
 
 11. ### Closures and Scope

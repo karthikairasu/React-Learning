@@ -67,4 +67,54 @@
         }, []);
 
 ## 4. Higher Order Component
-        - An HOC is a function that takes a component as an argument and returns a new component with enhanced functionality. HOCs do not modify the original component passed into them. Instead, they create a new component by wrapping the original component within it. 
+   - An HOC is a function that takes a component as an argument and returns a new component with enhanced functionality. HOCs do not modify the original component passed into them. Instead, they create a new component by wrapping the original component within it.
+       
+## 5. Data passing function component 
+
+1. Props (Parent ➝ Child) 
+    ```
+    function Parent() {
+        return <Child name="Karthi" />;
+    }
+
+    function Child({ name }) {
+        return <p>Hello, {name}</p>;
+    }
+    ```
+2. Callback Functions (Child ➝ Parent)
+     - Child sends data back by calling a function received from the parent.
+     ```
+     function Parent() {
+         const handleChildData = (data) => {
+             console.log(data);
+         };
+
+         return <Child onSend={handleChildData} />;
+     }
+
+     function Child({ onSend }) {
+         return <button onClick={() => onSend('Hello from Child')}>Send</button>;
+     }
+     ```
+3. React Context API (Global State)
+    - For passing data across multiple levels without prop drilling.
+     
+    ### Create Context
+    ` const UserContext = React.createContext(); `
+    ### Provider (Top Level)
+    ```
+    function Parent() {
+        return (
+            <UserContext.Provider value="Karthi">
+            <Child />
+            </UserContext.Provider>
+        );
+    }
+    ```
+    ### Consumer (Any Level)
+    ```
+    function Child() {
+        const name = React.useContext(UserContext);
+        return <p>Hello, {name}</p>;
+    }
+    ```

@@ -66,6 +66,18 @@
             };
         }, []);
 
+    4. Clean Up Resources on Unmount
+     
+        When your component is removed, you should clean up things like:
+
+        - Subscriptions
+
+        - Timers/Intervals
+
+        - Event listeners
+
+        - WebSocket connections
+
 ## 4. Higher Order Component
    - An HOC is a function that takes a component as an argument and returns a new component with enhanced functionality. HOCs do not modify the original component passed into them. Instead, they create a new component by wrapping the original component within it.
        

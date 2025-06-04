@@ -498,7 +498,7 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
 
 11. ### Closures and Scope
     
-    A closure is a function that remembers variables from its outer scope even after the outer function is done.
+    A closure is a function that remembers variables from its outer scope even after the outer function is has finished executing.
     ```
     Ex: function outer() {
             let count = 0;

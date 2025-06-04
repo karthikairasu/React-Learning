@@ -498,6 +498,21 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
 
 11. ### Closures and Scope
     
+    A closure is a function that remembers variables from its outer scope even after the outer function is done.
+    ```
+    Ex: function outer() {
+            let count = 0;
+            return function inner() {
+                count++;
+                console.log(count);
+            };
+        }
+        const counter = outer();
+        counter(); // 1
+        counter(); // 2
+    ```
+
+    
     **[⬆ Back to Top](#es6-features)**
 
 12. ### `this` Keyword

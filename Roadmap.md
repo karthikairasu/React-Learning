@@ -210,7 +210,7 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
 
 ===========================================================================
 
-1.  ### Let and Const: 
+### 1. Let and Const: 
 
     #### let → block-scoped, can be reassigned.
     #### const → block-scoped, cannot be reassigned.

@@ -517,6 +517,60 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
 
 12. ### `this` Keyword
     
+    - The this keyword in JavaScript refers to the object that is executing the current function.
+    - Its value is determined at runtime, depending on how and where the function is called.
+    - ES6 introduced arrow functions, which change the behavior of this compared to traditional functions.
+    
+    1. Global Context - In the global scope, this refers to the global object.
+        ```
+        console.log(this); // In browsers, this === window
+        ```
+    2. Object Methods - When a function is called as a method of an object, this refers to the object.
+        ```
+        const obj = {
+            name: 'John',
+            sayName: function() {
+                console.log(this.name); // 'John'
+            }
+        };
+        obj.sayName();
+        ``` 
+    3. Regular Functions - In a standalone regular function (not inside an object), this refers to the global object (or undefined in strict mode).
+        ```
+        function show() {
+            console.log(this); // window or undefined in strict mode
+        }
+        show();
+        ```
+    4. Arrow Functions (ES6 Feature) - Arrow functions do not have their own this.They inherit this from their surrounding lexical scope.
+        ```
+        const obj = {
+        name: 'Sam',
+        greet: function() {
+            const arrow = () => {
+            console.log(this.name); // 'Sam'
+            };
+            arrow();
+        }
+        };
+        obj.greet();
+        ```
+    5. In Classes (ES6 Feature) - Inside a class method, this refers to the class instance.
+        ```
+        class User {
+        constructor(name) {
+            this.name = name;
+        }
+
+        sayHello() {
+            console.log(`Hello, ${this.name}`);
+        }
+        }
+
+        const u = new User('Mike');
+        u.sayHello(); // Hello, Mike
+        ```
+    
     **[⬆ Back to Top](#es6-features)**
 
 13. ### Prototypes and Inheritance

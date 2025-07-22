@@ -1,90 +1,104 @@
+## Basic Idea of the DOM First - DOM
+   Before jumping to Virtual DOM, we need to understand the real DOM:
+
+   - DOM stands for Document Object Model.
+
+   - It’s how your browser represents the structure of an HTML page.
+
+   - It’s tree-like — everything `(like <div>, <p>, etc.)` is a node.
+
 ## 1. React Virtual Dom
-        The Virtual DOM is a lightweight in-memory representation of the actual DOM, When something in the app changes (like a user clicks a button or data updates), the changes are first applied to this virtual version instead of the real DOM.
-
-    ### 🔧 How It Works
-
-    #### 1. Initial Render
-    - React builds a virtual DOM tree that mirrors the structure of the real DOM.
-
-    #### 2. State/Props Change
-    - When a component's **state** or **props** change, React:
-    - Creates a new Virtual DOM based on the updated data.
-    - Compares (diffs) the new Virtual DOM with the previous one.
-
-    ---
-
-    ### ⚙️ Diffing Algorithm
-
-    - React uses a fast reconciliation process to detect what has changed in the virtual DOM.
-    - The algorithm quickly identifies differences between the old and new virtual DOMs.
-
-    ---
-
-    ### 🚀 Efficient Updates
-
-    - Only the changed elements are updated in the real DOM.
-    - This reduces expensive DOM operations and boosts performance.
+    
+   - The Virtual DOM is a lightweight in-memory (a JavaScript object) representation of the real DOM.
+    
+   - When the app’s state changes, React creates a new virtual DOM tree and compares it with the previous one using a diffing algorithm, finds the minimal changes, and then updates only those parts in the real DOM.
+ 
+   - This reduces expensive DOM operations and boosts performance. 
+    
+   - React keeps only one Virtual DOM tree for the whole app at any time. After updating the real DOM, React replaces the old Virtual DOM tree with the new one.
 
 ## 2. Pure Component
    
-    - In React, a Pure Component is a type of component that implements a shallow comparison on its props and state to decide whether it should re-render. This optimization can help improve performance by preventing unnecessary renders
-    - Shallow Comparison
+   - In React, a Pure Component is a type of component that implements a shallow comparison on its props and state to decide whether it should re-render. This optimization can help improve performance by preventing unnecessary renders.
+    
+   - Shallow Comparison
 
 ## 3. Life Cycle Function Component
 
-    1. Mounting Phase (👇 Equivalent of componentDidMount) 
+1. Mounting Phase (👇 Equivalent of componentDidMount) 
    
-       - The empty dependency array [] means this effect runs only once, after the first render.
-        
-        useEffect(() => {
-            console.log("Component mounted");
+    The empty dependency array [] means this effect runs only once, after the first render.
+    ```jsx
+    useEffect(() => {
+        console.log("Component mounted");
 
-            // This runs once when the component is first rendered
+        // This runs once when the component is first rendered
 
-        }, []);
-
-    2. Updating Phase (👇 Equivalent of componentDidUpdate) 
+    }, []);
+    ```
+2. Updating Phase (👇 Equivalent of componentDidUpdate) 
    
-        - This effect runs whenever count changes.
+    This effect runs whenever count changes.
+    ```jsx 
+    useEffect(() => {
+        console.log("Count updated:", count);
+    }, [count]);
+    ```
+3. Unmounting Phase (👇 Equivalent of componentWillUnmount)
 
-        useEffect(() => {
-            console.log("Count updated:", count);
-        }, [count]);
+    Return function useEffect inside [] array cleanup before unmount.
 
-    3. Unmounting Phase (👇 Equivalent of componentWillUnmount)
+    The cleanup function (the return) runs only once, right before the component unmounts (just like componentWillUnmount).
+    ```jsx
+    useEffect(() => {
+        // setup
+        console.log("Component mounted");
 
-        - return function useEffect inside [] array cleanup before unmount.
-        - The cleanup function (the return) runs only once, right before the component unmounts (just like componentWillUnmount).
-  
-        useEffect(() => {
-            // setup
-            console.log("Component mounted");
-
-            return () => {
-                // cleanup
-                console.log("Component will unmount");
-            };
-        }, []);
-
-    4. Clean Up Resources on Unmount
+        return () => {
+            // cleanup
+            console.log("Component will unmount");
+        };
+    }, []);
+    ```
+4. Clean Up Resources on Unmount
      
-        When your component is removed, you should clean up things like:
+    When your component is removed, you should clean up things like:
 
-        - Subscriptions
+    - Subscriptions
+    - Timers/Intervals
+    - Event listeners
+    - WebSocket connections
+  
+## 4. What is JSX?
 
-        - Timers/Intervals
+   JSX - JavaScript XML
 
-        - Event listeners
+   - JSX is a syntax extension for JavaScript that allows developers to write HTML-like elements in their JavaScript code.
+   - It is used in React to describe the structure and content of a component.
+   - JSX is transpiled to plain JavaScript before being executed, so it is compatible with all web browsers.
 
-        - WebSocket connections
+## 5. React Fragments ?
 
-## 4. Higher Order Component
+   - Fragments let you group a list of children without adding extra nodes to the DOM.
+   - React Fragments are useful when returning multiple elements from a component without adding extra `<div>` or other wrapper nodes to the DOM.
+   ```jsx
+        Ex1: return(
+                <React.Fragment key={item.id}>...</React.Fragment> //Explicit syntax
+            )
+        
+        Ex2: return(
+                <>...</> //Shorthand syntax
+            )
+   ``` 
+ 
+## 6. Higher Order Component
+
    - An HOC is a function that takes a component as an argument and returns a new component with enhanced functionality. HOCs do not modify the original component passed into them. Instead, they create a new component by wrapping the original component within it.
        
-## 5. Data passing function component 
+## 7. Data passing function component 
 
 1. Props (Parent ➝ Child) 
-    ```
+    ```jsx
     function Parent() {
         return <Child name="Karthi" />;
     }
@@ -95,7 +109,7 @@
     ```
 2. Callback Functions (Child ➝ Parent)
      - Child sends data back by calling a function received from the parent.
-     ```
+     ```jsx
      function Parent() {
          const handleChildData = (data) => {
              console.log(data);
@@ -114,7 +128,7 @@
     ### Create Context
     ` const UserContext = React.createContext(); `
     ### Provider (Top Level)
-    ```
+    ```jsx
     function Parent() {
         return (
             <UserContext.Provider value="Karthi">
@@ -124,9 +138,12 @@
     }
     ```
     ### Consumer (Any Level)
-    ```
+    ```jsx
     function Child() {
         const name = React.useContext(UserContext);
         return <p>Hello, {name}</p>;
     }
     ```
+## 8. UseEffect?
+
+    useEffect is a React Hook used to handle side effects in functional components, like data fetching, subscriptions, or manually changing the DOM. It runs after the component renders. It mimics lifecycle methods—like componentDidMount, componentDidUpdate, and componentWillUnmount. I used it to fetch user data from an API when the component loads and update the state. I added a dependency array so it only runs when specific props or state change

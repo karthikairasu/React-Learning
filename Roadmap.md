@@ -210,22 +210,27 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
 
 ===========================================================================
 
-### 1. Let and Const: 
+1.  ### Let and Const: 
 
     #### let → block-scoped, can be reassigned.
     #### const → block-scoped, cannot be reassigned.
     
-    TDZ- variables declared with let and const are hoist, But it is not initialized, so it lives in the TDZ (Temporal Dead Zone) not accessible until they are initialized with a value
+    - let and const are hoist, But it is not initialized, so it lives in the TDZ (Temporal Dead Zone) not accessible until they are initialized with a value
 
-    ``` 
-    Ex: 1 [Start of block] 
-        2 | 
-        3 |--- TDZ begins (x is hoisted but not initialized) 
-        4 |   x = 5         ❌ Error! `x` is in the Temporal Dead Zone 
-        5 |   console.log(x) ❌ Never reached 
-        6 |   let x         ✅ Initialization (TDZ ends here) 
-        7 | 
-        8 [End of block] You cannot access x on line 4 or 5.
+    - The TDZ starts at the beginning of the block and ends at the line where let x is declared.
+
+    - Accessing it (read or write) before initialization results in a ReferenceError.
+
+    ```jsx harmony
+    Ex: {
+            // TDZ begins: `x` is hoisted (in memory), but uninitialized
+            // Code execution starts here
+
+            x = 5;           // ❌ ReferenceError: Cannot access 'x' before initialization
+            console.log(x);  // ❌ Never executed because the line above throws an error
+
+            let x;           // ✅ Declaration (hoisted at top), initialization happens here — TDZ ends
+        }
     ```
        
     **[⬆ Back to Top](#es6-features)**
@@ -242,14 +247,15 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
 
     - Anywhere you don’t need your own this(Avoiding this rebinding) - Arrow functions inherit this from their outer (lexical) scope, making them great when you want to avoid this confusion.
 
-    ``` 
+    ```jsx harmony
     Ex 1: const add = (a, b) => a + b;
 
     Ex 2: this keyword  - 
     const person = {
+      name: "javascript"
       talk(){
         setTimeout(() => { // arrow function don't rebind this keyword
-          console.log("this", test);
+          console.log(this);
         }, 1000)
       }
     } 
@@ -262,7 +268,7 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
    
     Extract values from arrays or objects easily.
 
-    ```
+    ```jsx harmony
     Ex : const address = {
          street : "",
          city: "",
@@ -281,7 +287,7 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
     #### Spread 
     The JavaScript spread operator ( ... ) allows us to quickly copy all or part of an existing array or object into another array or object. denoted by three dots `...`
 
-    ```
+    ```jsx harmony
     Ex: 1.Array :
         const first = [1, 2, 3];
         const second = [4, 5, 6];
@@ -299,7 +305,7 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
     #### Rest
     The rest operator in JavaScript, denoted by three dots (...), allows a function to accept an indefinite number of arguments as an array. It is used in function parameters and must be the last parameter in the list. The rest operator collects all the remaining arguments passed to a function and bundles them into an array, making it easier to handle variable-length argument lists.
 
-    ```
+    ```jsx harmony
     Ex: function myBio(...details) {
         console.log(details); // array 
         }
@@ -313,7 +319,7 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
     
     Use backticks for string interpolation.
 
-    ```
+    ```jsx harmony
     Ex: const name = "Bob";
         const greeting = `Hello, ${name}!`;
     ```
@@ -323,7 +329,7 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
 6.  ### Promises and Async-Await
     
     #### promises
-    - A Promise is a JavaScript object that represents the eventual completion or failure of an asynchronous operation.
+    - A Promise is a JavaScript object that represents the eventual completion (or failure) of an asynchronous operation.
     - It has three states: `pending, fulfilled, and rejected`.
     - Promises help write cleaner, more manageable async code, avoiding callback hell.
     - It's a way to handle async tasks like API calls, with .then() for success and .catch() for errors.
@@ -333,7 +339,7 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
       - .blob() – for binary data
       - .formData() – for form data
       - .arrayBuffer() – for raw data
-    ```
+    ```jsx harmony
     Ex: const fetchUser = fetch("https://jsonplaceholder.typicode.com/users/1");
 
         fetchUser
@@ -351,7 +357,7 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
     - `await` pauses the function until the Promise is resolved or rejected.
 
     - It makes asynchronous code look and behave like synchronous code, improving readability. 
-    ```
+    ``` jsx harmony
      Ex: // const Data = async (id) =>{}
         async function getData(id) {
         try {
@@ -380,7 +386,7 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
     You export one default value from a module.
     You can import it with any name.
 
-    ```
+    ```jsx
     Ex: 1. export const add = (a, b) => a + b;
            export const subtract = (a, b) => a - b;
            import { add, subtract } from './math.js';
@@ -397,21 +403,21 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
     
     #### Map 
     Transforms each element of the array and returns a new array of the same length.
-    ```
+    ```jsx
     Ex: const numbers = [1, 2, 3];
         const doubled = numbers.map(num => num * 2);
         console.log(doubled); // [2, 4, 6]
     ```
     #### Filter
     Filters elements based on a condition and returns a new array with only matching items.
-    ```
+    ```jsx
     Ex: const numbers = [1, 2, 3, 4];
         const even = numbers.filter(num => num % 2 === 0);
         console.log(even); // [2, 4]
     ```
     #### Reduce
     Reduces the array to a single value by accumulating results.
-    ```
+    ```jsx
     Ex: const numbers = [1, 2, 3, 4];
         const total = numbers.reduce((acc, curr) => acc + curr, 0);
         console.log(total); // 10
@@ -433,7 +439,7 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
        4. Text/content
 
        5. Event bindings
-    ```
+    ```jsx
     Ex: document.getElementById('title');
         document.querySelector('.card');
         document.querySelectorAll('li');
@@ -454,7 +460,7 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
      
     1. Prevent Default Behavior
        - Some elements (like `<a>` or `<form>`) have default actions. You can cancel them
-            ```
+            ```jsx
             Ex:
             <form id="myForm">
                 <label for="name">Name:</label>
@@ -468,7 +474,7 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
             ```
     2. Stop Event Propagation
        - You can stop the event from moving up the DOM tree:
-            ```
+            ```jsx
             Ex:
             <div class="container">
                 Container
@@ -484,7 +490,7 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
             });
             ```
     3. Remove Event Listener
-        ```
+        ```jsx
         Ex:
         function handleClick() {
             alert("Clicked once!");
@@ -499,7 +505,7 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
 11. ### Closures and Scope
     
     A closure is a function that remembers variables from its outer scope even after the outer function is has finished executing.
-    ```
+    ```jsx
     Ex: function outer() {
             let count = 0;
             return function inner() {
@@ -522,11 +528,11 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
     - ES6 introduced arrow functions, which change the behavior of this compared to traditional functions.
     
     1. Global Context - In the global scope, this refers to the global object.
-        ```
+        ```jsx
         console.log(this); // In browsers, this === window
         ```
     2. Object Methods - When a function is called as a method of an object, this refers to the object.
-        ```
+        ```jsx
         const obj = {
             name: 'John',
             sayName: function() {
@@ -536,14 +542,14 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
         obj.sayName();
         ``` 
     3. Regular Functions - In a standalone regular function (not inside an object), this refers to the global object (or undefined in strict mode).
-        ```
+        ```jsx
         function show() {
             console.log(this); // window or undefined in strict mode
         }
         show();
         ```
     4. Arrow Functions (ES6 Feature) - Arrow functions do not have their own this.They inherit this from their surrounding lexical scope.
-        ```
+        ```jsx
         const obj = {
         name: 'Sam',
         greet: function() {
@@ -556,7 +562,7 @@ Before diving into React, ensure you have a solid foundation in modern JavaScrip
         obj.greet();
         ```
     5. In Classes (ES6 Feature) - Inside a class method, this refers to the class instance.
-        ```
+        ```jsx
         class User {
         constructor(name) {
             this.name = name;
